@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot AI</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <main class="chat-container">
+        <header class="chat-header">
+            <h1>Chatbot AI</h1>
+            <p>NVIDIA Nemotron 3 Ultra</p>
+        </header>
+
+        <div class="chat-box" id="chat-box" aria-live="polite">
+            <div class="message bot">
+                <div class="bubble">Halo! Ada yang bisa saya bantu?</div>
+            </div>
+        </div>
+
+        <form class="chat-form" id="chat-form">
+            <label class="sr-only" for="message-input">Tulis pesan</label>
+            <input type="text" id="message-input" placeholder="Ketik pesan..." autocomplete="off" maxlength="4000" required>
+            <button type="submit" id="send-button">Kirim</button>
+        </form>
+    </main>
+</body>
+</html>
