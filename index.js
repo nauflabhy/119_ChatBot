@@ -23,7 +23,7 @@ app.post("/api/chat", async (req, res) => {
             });
         }
 
-        const response = await fetch("https://api.openrouter.ai/v1/chat/completions", {
+        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
             method: "POST",
 
             headers: {
@@ -32,7 +32,7 @@ app.post("/api/chat", async (req, res) => {
             },
 
             body: JSON.stringify({
-                model: "nvidia/nemotron-3.5-super-v1:free",
+                model: "nvidia/nemotron-3-ultra-550b-a55b:free",
                 messages: message,
                 temperature: 0.7,
                 max_tokens: 1000,
@@ -84,20 +84,20 @@ app.post("/api/chat", async (req, res) => {
                     continue;
                 }
 
-                if (trimmedLine.startsWith("data: ")) {
+                if (!trimmedLine.startsWith("data:")) {
                     continue;
                 }
 
-                const data = trimmedLine.slice(5).trim();
+                const data = trimmedLine.slice("data:".length).trim();
 
-                if (data === "[DONE]") {
+                if (!data || data === "[DONE]") {
                     continue;
                 }
 
                 try {
                     const parsedData = JSON.parse(data);
 
-                    const content = json.choices?.[0]?.delta?.content;
+                    const content = parsedData.choices?.[0]?.delta?.content;
 
                     if (content) {
                         res.write(`data: ${JSON.stringify(content)}\n\n`);
@@ -124,7 +124,7 @@ app.post("/api/chat", async (req, res) => {
             });
         } else {
             res.write(
-                `data: ${JSON.stringify({ error: "Terjadi kesalahan pada server" })}\n\n`
+                `data: ${JSON.stringify("Terjadi kesalahan pada server")}\n\n`
             );
             res.end();
         }
